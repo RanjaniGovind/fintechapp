@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  apache:
+    build: ./apache
+    container_name: apache-server
+    ports:
+      - "80:80"
+    depends_on:
+      - app1
+      - app2
+
+  app1:
+    build: ./app
+    container_name: tomcat-app1
+    environment:
+      - JVM_ROUTE=1
+    expose:
+      - "8080"
+    depends_on:
+      - db
+
+  app2:
+    build: ./app
+    container_name: tomcat-app2
+    environment:
+      - JVM_ROUTE=2
+    expose:
+      - "8080"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: fintech
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: pass123
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
