@@ -30,6 +30,34 @@ services:
       - "8080"
     depends_on:
       - db
+  app3:
+    build: ./app
+    container_name: tomcat-app3
+    environment:
+      - JVM_ROUTE=3
+    expose:
+      - "8080"
+    depends_on:
+      - db
+
+  app4:
+    build: ./app
+    container_name: tomcat-app4
+    environment:
+      - JVM_ROUTE=4
+    expose:
+      - "8080"
+    depends_on:
+      - db
+  app5:
+    build: ./app
+    container_name: tomcat-app5
+    environment:
+      - JVM_ROUTE=5
+    expose:
+      - "8080"
+    depends_on:
+      - db
 
   db:
     image: mysql:5.7
